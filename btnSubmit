@@ -1,4 +1,5 @@
-$('.btnSaveDetailedEst').click(function () {
+<button class="ExportToExcel">Export</button>
+$('.ExportToExcel').click(function () {
 	 var list = [];
 	                 list.push({
                     "DisplayOrder": $(this).closest("tr").index(),
