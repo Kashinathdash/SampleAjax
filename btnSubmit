@@ -1,0 +1,43 @@
+$('.btnSaveDetailedEst').click(function () {
+	 var list = [];
+	                 list.push({
+                    "DisplayOrder": $(this).closest("tr").index(),
+                    "ID": $(this).attr('data-itemid'),
+                    "Comp_ID": $('#Comp_ID').text(),
+                    "Remedy_Short_ID": $('#Remedy_Short_ID').text(),
+                    "BillType": $(this).find('#deBillType option:selected').val(),
+                    "TaskType": $(this).find('#deTaskType option:selected').val(),
+                    "Task": $.trim($(this).find('#deTask').val()),// $(this).find('#deTask').val().trim(),
+                    "Comment": $.trim($(this).find('#deComment').val()),// $(this).find('#deComment').val().trim(),
+                    "Complexity": $(this).find('#deComplexity option:selected').val(),
+                    "Estimates": $(this).find('#deEstimate').val(),
+                    "TypeOfTemplate": $('#TypeOfTemplate').text()
+                });
+				
+	            $.ajax({
+                type: "POST",
+                url: url,
+                data: JSON.stringify(list),
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    if (data.success) {
+                        
+                    }
+
+                    else {
+                        $('#deStatusMessage').html(getStatusHTML(" Couldn't save data due to internal error. Please try again. ", "Error"));
+
+                    }
+                }
+                ,
+                statusCode: {
+                    404: function (content) { alert('cannot find resource'); },
+                    500: function (content) { alert('internal server error'); }
+                }
+                ,
+                error: function (msg) {
+                    //alert("Error");
+                    $('#deStatusMessage').html(getStatusHTML(" Couldn't save data due to internal error. Please try again. ", "Error"));
+                }
+            });			
+});
